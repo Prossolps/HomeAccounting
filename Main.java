@@ -2,48 +2,68 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        Scanner scan = new Scanner(System.in);
+        Scanner scanner = new Scanner(System.in);
 
-        double result = 0;
+        double balance = 0;
+        boolean run = true;
         
-        while (true) { 
+        while (run == true) { 
             System.out.printf("%n=== Домашняя бухгалтерия ===%n1. Добавить доход%n2. Добавить расход%n3. Показать баланс%n4. Выход%n%nВыберите действие: ");
-            byte action = scan.nextByte();
-            scan.nextLine();
+            if(scanner.hasNextByte()){
+                byte action = scanner.nextByte();
+                scanner.nextLine();
 
-            if(action == 1){
-                System.out.print("Введите число: ");
-                double debit = scan.nextDouble();
+                switch(action){
+                
+                    case (1):
+                        System.out.print("Введите число: ");
+                        if(scanner.hasNextDouble()){
+                            double income = scanner.nextDouble();
+                            if(income >= 0){
+                                balance += income;
+                            }
+                            else {
+                                System.out.println("Введите положительное число");
+                            }
+                        } else{
+                            System.out.printf("%nНужно ввести число%n");
+                            scanner.nextLine();
+                        }
 
-                if(debit >= 0){
-                    result += debit;
-                }
-                else if(debit < 0){
-                    System.out.println("Введите положительное число");
-                }
-            }
-            else if(action == 2){
-                System.out.print("Введите расход: ");
-                double credit = scan.nextDouble();
+                        break;
+                    case (2):
+                        System.out.print("Введите расход: ");
+                        if(scanner.hasNextDouble()){
+                            double expence = scanner.nextDouble();
 
-                if(credit >= 0){
-                    result -= credit;
+                            if(expence >= 0){
+                                balance -= expence;
+                            }
+                            else{
+                                System.out.println("Введите положительное число");
+                            }
+                        } 
+                        else{
+                            System.out.printf("%nНужно ввести число%n");
+                            scanner.nextLine();
+                        }
+
+                        break;
+                    case (3):
+                        System.out.printf("Ваш баланс: %.2f %n", balance);
+                        break;
+                    case (4):
+                        run = false;
+                        break;
+                    default:
+                        System.out.println("Такого действия нет");
                 }
-                else if(credit < 0){
-                    System.out.println("Введите положительное число");
-                }
-            }
-            else if(action == 3){
-                System.out.println("Ваш баланс: " + result);
-            }
-            else if(action == 4){
-                break;
             }
             else{
-                System.out.println("Такого действия нет");
+                System.out.println("Нужно ввести число");
             }
-
-            action = 0;
+            
+            
         }
     }
 }
